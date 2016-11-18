@@ -16,7 +16,7 @@ type Message struct {
 	Footer     string ""
 }
 
-const COLOR_WARN string = "warn"
+const COLOR_WARN string = "warning"
 const COLOR_DANGER string = "danger"
 const COLOR_GOOD string = "good"
 
