@@ -1,8 +1,8 @@
 # slackstatus
 Simple Go library to post formatted status messages to a Slack channel
 
-Usage:
-```
+## Usage
+```go
 package main
 
 import "github.com/pteich/slackstatus"
