@@ -32,7 +32,7 @@ type payload struct {
 	Attachments []attachment `json:"attachments,omitempty"`
 }
 
-func composeMessage(slackmessage Message, text string, color string) payload {
+func composeMessage(slackmessage *Message, text string, color string) payload {
 
 	slackAttachment := attachment{Color: &color, Text: &text, Footer: &slackmessage.Footer}
 
