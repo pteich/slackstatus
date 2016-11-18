@@ -1,5 +1,7 @@
 # slackstatus
-Simple Go library to post formatted status messages to a Slack channel
+Simple Go library to post formatted status messages to a Slack channel :tada:
+
+![Slackstatus in Action](https://s3-eu-west-1.amazonaws.com/pteichgithub/slackstatus/slackstatus-example.PNG =500x)
 
 ## Usage
 ```go
