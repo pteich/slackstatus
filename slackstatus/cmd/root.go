@@ -30,12 +30,13 @@ import (
 	"log"
 
 	"github.com/pteich/slackstatus"
+	"bufio"
 )
 
 var cfgFile string
 
 var RootCmd = &cobra.Command{
-	Use:   "slackstatus",
+	Use:   "slackstatus \"your message here\"",
 	Short: "Post a formatted status message to Slack",
 	Long: `Post a formatted status message to a Slack channel with a given
 username. An optional footer info can be provided.
@@ -45,8 +46,14 @@ You need to set up an incoming webhook for your Slack at https://my.slack.com/se
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		if len(args) < 1 {
-			log.Fatal("You need to provide a message to post as argument")
+		message := getPipedInput()
+		if (len(args) > 1) {
+			message = args[0]
+		}
+
+		if len(message) == 0 {
+			cmd.Help()
+			log.Fatal("You need to provide a message as argument or pipe a message")
 		}
 
 		var slackmsg = slackstatus.Message{
@@ -57,7 +64,7 @@ You need to set up an incoming webhook for your Slack at https://my.slack.com/se
 			Footer: viper.GetString("footer"),
 		}
 
-		if err := slackmsg.Send(args[0], viper.GetString("color")); err != nil {
+		if err := slackmsg.Send(message, viper.GetString("color")); err != nil {
 			log.Fatal(err)
 		}
 
@@ -104,4 +111,22 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
+}
+
+func getPipedInput() string {
+
+	fileInput, err := os.Stdin.Stat()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var text string
+	if fileInput.Mode() & os.ModeNamedPipe != 0 {
+		scanner := bufio.NewScanner(os.Stdin)
+		for scanner.Scan() {
+			text += scanner.Text()
+		}
+	}
+
+	return text
 }
