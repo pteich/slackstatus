@@ -3,7 +3,10 @@ Simple CLI tool and Go library to post formatted status messages to a Slack chan
 
 ![Slackstatus in Action](./slackstatus-example.png)
 
-## CLI usage
+## Usage as CLI tool
+
+Slackstatus is available as pre-built binaries for macOS, Linux, FreeBSD and Windows on the [release page](./releases).
+
 ```shell
 slackstatus "message body" --webhook=https://hooks.slack.com/services/XXXX --color=good --chanel=status --user=slackstatus --footer="V1.0.0" --iconemoji=":monkey_face:"
 ```
@@ -18,6 +21,11 @@ iconemoji: :monkey_face:
 ```
 
 You can also provide a specific path to your config file as `--config=/path/to/config`.
+
+Get help on all available arguments:
+```shell
+slackstatus --help
+```
 
 ## Usage as Go library
 ```go
