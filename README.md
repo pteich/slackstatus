@@ -33,7 +33,13 @@ package main
 
 import "github.com/pteich/slackstatus"
 
-var slackmsg = slackstatus.Message{WebhookURL: "https://hooks.slack.com/services/XXXX", Username: "slackstatus", Channel: "#channelname", IconEmoji: ":monkey_face:", Footer: "Version 1.0.0"}
+var slackmsg = slackstatus.Message{
+	WebhookURL: "https://hooks.slack.com/services/XXXX",
+	Username: "slackstatus",
+	Channel: "#status",
+	IconEmoji: ":monkey_face:",
+	Footer: "Version 1.0.0",
+}
 
 func main() {
 
