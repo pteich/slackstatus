@@ -11,12 +11,12 @@ Slackstatus is available as pre-built binaries for macOS, Linux, FreeBSD and Win
 slackstatus "message body" --webhook=https://hooks.slack.com/services/XXXX --color=good --chanel=status --user=slackstatus --footer="V1.0.0" --iconemoji=":monkey_face:"
 ```
 
-You can also pipe your message text from another output like so:
+You can also pipe your message text from another output:
 ```shell
 echo "message text" | slackstatus --color=good
 ```
 
-All flag values can also be pre-set in a config file `.slackstatus.yml` in the current directory or your `$HOME` like so:
+All flag values can also be pre-set in a config file `.slackstatus.yml` in the current directory or in your `$HOME` like so:
 ```yaml
 webhook: https://hooks.slack.com/services/XXXX
 user: slackstatus
@@ -25,9 +25,9 @@ footer: V1.0.0
 iconemoji: :monkey_face:
 ```
 
-You can also provide a specific path to your config file as `--config=/path/to/config`.
+It is also possible to provide a specific path to your config file as `--config=/path/to/config`.
 
-Get help on all available arguments:
+Get help on all available flags:
 ```shell
 slackstatus --help
 ```
