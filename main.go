@@ -19,8 +19,10 @@ type Message struct {
 
 // COLOR_WARNING is a predefined color for a warning (yellow)
 const COLOR_WARNING string = "warning"
+
 // COLOR_DANGER is a predefined color for a dangerous condition (red)
 const COLOR_DANGER string = "danger"
+
 // COLOR_GOOD is a predefined color for a normal information (green)
 const COLOR_GOOD string = "good"
 
