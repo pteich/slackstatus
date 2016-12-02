@@ -8,6 +8,7 @@ import (
 	"net/http"
 )
 
+// Message defines the message that should be send to Slack
 type Message struct {
 	WebhookURL string
 	Channel    string
@@ -16,10 +17,14 @@ type Message struct {
 	Footer     string ""
 }
 
+// COLOR_WARNING is a predefined color for a warning (yellow)
 const COLOR_WARNING string = "warning"
+// COLOR_DANGER is a predefined color for a dangerous condition (red)
 const COLOR_DANGER string = "danger"
+// COLOR_GOOD is a predefined color for a normal information (green)
 const COLOR_GOOD string = "good"
 
+// Send sends the given message to Slack
 func (msg *Message) Send(message string, color string) error {
 
 	body, err := json.Marshal(composeMessage(msg, message, color))

@@ -16,7 +16,7 @@ type attachment struct {
 	Title      *string  `json:"title"`
 	TitleLink  *string  `json:"title_link"`
 	Text       *string  `json:"text"`
-	ImageUrl   *string  `json:"image_url"`
+	ImageURL   *string  `json:"image_url"`
 	Fields     []*field `json:"fields"`
 	Footer     *string  `json:"footer"`
 	FooterIcon *string  `json:"footer_icon"`
@@ -25,7 +25,7 @@ type attachment struct {
 type payload struct {
 	Parse       string       `json:"parse,omitempty"`
 	Username    string       `json:"username,omitempty"`
-	IconUrl     string       `json:"icon_url,omitempty"`
+	IconURL     string       `json:"icon_url,omitempty"`
 	IconEmoji   string       `json:"icon_emoji,omitempty"`
 	Channel     string       `json:"channel,omitempty"`
 	Text        string       `json:"text,omitempty"`
