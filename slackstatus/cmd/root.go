@@ -29,8 +29,8 @@ import (
 
 	"log"
 
-	"github.com/pteich/slackstatus"
 	"bufio"
+	"github.com/pteich/slackstatus"
 )
 
 var cfgFile string
@@ -47,7 +47,7 @@ You need to set up an incoming webhook for your Slack at https://my.slack.com/se
 	Run: func(cmd *cobra.Command, args []string) {
 
 		message := getPipedInput()
-		if (len(args) > 1) {
+		if len(args) > 1 {
 			message = args[0]
 		}
 
@@ -58,10 +58,10 @@ You need to set up an incoming webhook for your Slack at https://my.slack.com/se
 
 		var slackmsg = slackstatus.Message{
 			WebhookURL: viper.GetString("webhook"),
-			Username: viper.GetString("user"),
-			Channel: viper.GetString("channel"),
-			IconEmoji: viper.GetString("iconemoji"),
-			Footer: viper.GetString("footer"),
+			Username:   viper.GetString("user"),
+			Channel:    viper.GetString("channel"),
+			IconEmoji:  viper.GetString("iconemoji"),
+			Footer:     viper.GetString("footer"),
 		}
 
 		if err := slackmsg.Send(message, viper.GetString("color")); err != nil {
@@ -121,7 +121,7 @@ func getPipedInput() string {
 	}
 
 	var text string
-	if fileInput.Mode() & os.ModeNamedPipe != 0 {
+	if fileInput.Mode()&os.ModeNamedPipe != 0 {
 		scanner := bufio.NewScanner(os.Stdin)
 		for scanner.Scan() {
 			text += scanner.Text()
