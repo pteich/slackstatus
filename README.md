@@ -1,4 +1,4 @@
-# slackstatus
+# slackstatus [![GoDoc](https://godoc.org/github.com/pteich/slackstatus?status.svg)](https://godoc.org/github.com/pteich/slackstatus)
 Simple CLI tool and Go library to post formatted status messages to a Slack channel :tada:
 
 ![Slackstatus in Action](./slackstatus-example.png)
