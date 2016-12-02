@@ -13,8 +13,8 @@ type Message struct {
 	WebhookURL string
 	Channel    string
 	Username   string
-	IconEmoji  string ":monkey_face:"
-	Footer     string ""
+	IconEmoji  string
+	Footer     string
 }
 
 // COLOR_WARNING is a predefined color for a warning (yellow)
