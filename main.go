@@ -17,13 +17,13 @@ type Message struct {
 	Footer     string
 }
 
-// COLOR_WARNING is a predefined color for a warning (yellow)
+// ColorWarning is a predefined color for a warning (yellow)
 const ColorWarning string = "warning"
 
-// COLOR_DANGER is a predefined color for a dangerous condition (red)
+// ColorDanger is a predefined color for a dangerous condition (red)
 const ColorDanger string = "danger"
 
-// COLOR_GOOD is a predefined color for a normal information (green)
+// ColorGood is a predefined color for a normal information (green)
 const ColorGood string = "good"
 
 // Send sends the given message to Slack
