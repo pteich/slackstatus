@@ -10,11 +10,11 @@ import (
 
 // Message defines the message that should be send to Slack
 type Message struct {
-	WebhookURL string `json:"webhook_url",mapstructure:"webhook_url"`
-	Channel    string `json:"channel",mapstructure:"channel"`
-	Username   string `json:"username",mapstructure:"username"`
-	IconEmoji  string `json:"icon_emoji",mapstructure:"icon_emoji"`
-	Footer     string `json:"footer",mapstructure:"footer"`
+	WebhookURL string `mapstructure:"webhook_url"`
+	Channel    string `mapstructure:"channel"`
+	Username   string `mapstructure:"username"`
+	IconEmoji  string `mapstructure:"icon_emoji"`
+	Footer     string `mapstructure:"footer"`
 }
 
 // ColorWarning is a predefined color for a warning (yellow)
