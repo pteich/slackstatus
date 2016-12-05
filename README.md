@@ -48,9 +48,9 @@ var slackmsg = slackstatus.Message{
 
 func main() {
 
-	slackmsg.Send("Hello Slackstatus! Everything works fine.", slackstatus.COLOR_GOOD)
-	slackmsg.Send("Oh crap, something went wrong!", slackstatus.COLOR_WARNING)
-	slackmsg.Send("Damn, we are in serious trouble!", slackstatus.COLOR_DANGER)
+	slackmsg.Send("Hello Slackstatus! Everything works fine.", slackstatus.ColorGood)
+	slackmsg.Send("Oh crap, something went wrong!", slackstatus.ColorWarning)
+	slackmsg.Send("Damn, we are in serious trouble!", slackstatus.ColorDanger)
 	slackmsg.Send("Ok.", "#439FE0")
   
 }

@@ -18,13 +18,13 @@ type Message struct {
 }
 
 // COLOR_WARNING is a predefined color for a warning (yellow)
-const COLOR_WARNING string = "warning"
+const ColorWarning string = "warning"
 
 // COLOR_DANGER is a predefined color for a dangerous condition (red)
-const COLOR_DANGER string = "danger"
+const ColorDanger string = "danger"
 
 // COLOR_GOOD is a predefined color for a normal information (green)
-const COLOR_GOOD string = "good"
+const ColorGood string = "good"
 
 // Send sends the given message to Slack
 func (msg *Message) Send(message string, color string) error {
