@@ -21,16 +21,13 @@
 package cmd
 
 import (
+	"bufio"
 	"fmt"
-	"os"
-
+	"github.com/pteich/slackstatus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-
 	"log"
-
-	"bufio"
-	"github.com/pteich/slackstatus"
+	"os"
 )
 
 var cfgFile string

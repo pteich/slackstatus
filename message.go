@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"github.com/pteich/go-timeout-httpclient"
 	"io/ioutil"
 	"net/http"
 )
@@ -15,6 +16,7 @@ type Message struct {
 	Username   string `mapstructure:"username"`
 	IconEmoji  string `mapstructure:"icon_emoji"`
 	Footer     string `mapstructure:"footer"`
+	httpClient *http.Client
 }
 
 // ColorWarning is a predefined color for a warning (yellow)
@@ -34,10 +36,21 @@ func (msg *Message) Send(message string, color string) error {
 		return err
 	}
 
-	resp, err := http.Post(msg.WebhookURL, "application/json", bytes.NewReader(body))
+	if msg.httpClient == nil {
+		msg.createHttpClient()
+	}
+
+	req, err := http.NewRequest(http.MethodPost, msg.WebhookURL, bytes.NewReader(body))
 	if err != nil {
 		return err
 	}
+	req.Header.Set("Content-type", "application/json")
+
+	resp, err := msg.httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
@@ -46,4 +59,11 @@ func (msg *Message) Send(message string, color string) error {
 	}
 
 	return nil
+}
+
+func (msg *Message) createHttpClient() {
+	msg.httpClient = timeouthttp.NewClient(timeouthttp.Config{
+		RequestTimeout: 5,
+		ConnectTimeout: 5,
+	})
 }

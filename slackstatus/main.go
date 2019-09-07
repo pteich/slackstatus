@@ -20,7 +20,9 @@
 
 package main
 
-import "slackstatus/slackstatus/cmd"
+import (
+	"github.com/pteich/slackstatus/slackstatus/cmd"
+)
 
 func main() {
 	cmd.Execute()

@@ -34,7 +34,11 @@ type payload struct {
 
 func composeMessage(slackmessage *Message, text string, color string) payload {
 
-	slackAttachment := attachment{Color: &color, Text: &text, Footer: &slackmessage.Footer}
+	slackAttachment := attachment{
+		Color:  &color,
+		Text:   &text,
+		Footer: &slackmessage.Footer,
+	}
 
 	return payload{
 		Username:    slackmessage.Username,
