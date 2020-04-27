@@ -23,11 +23,13 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"github.com/pteich/slackstatus"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"log"
 	"os"
+
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+
+	"github.com/pteich/slackstatus"
 )
 
 var cfgFile string
@@ -54,11 +56,12 @@ You need to set up an incoming webhook for your Slack at https://my.slack.com/se
 		}
 
 		var slackmsg = slackstatus.Message{
-			WebhookURL: viper.GetString("webhook"),
-			Username:   viper.GetString("user"),
-			Channel:    viper.GetString("channel"),
-			IconEmoji:  viper.GetString("iconemoji"),
-			Footer:     viper.GetString("footer"),
+			WebhookURL:       viper.GetString("webhook"),
+			Username:         viper.GetString("user"),
+			Channel:          viper.GetString("channel"),
+			IconEmoji:        viper.GetString("iconemoji"),
+			Footer:           viper.GetString("footer"),
+			RetryRatelimited: viper.GetBool("retry"),
 		}
 
 		if err := slackmsg.Send(message, viper.GetString("color")); err != nil {
@@ -88,6 +91,7 @@ func init() {
 	RootCmd.PersistentFlags().String("iconemoji", ":monkey_face:", "Icon emoji to use whan posting")
 	RootCmd.PersistentFlags().String("footer", "", "Footer text")
 	RootCmd.PersistentFlags().String("color", "good", "Color for message bar")
+	RootCmd.PersistentFlags().Bool("retry", false, "Block and retry when rate limited")
 
 	viper.BindPFlags(RootCmd.PersistentFlags())
 
