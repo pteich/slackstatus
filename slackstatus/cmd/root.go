@@ -46,7 +46,7 @@ You need to set up an incoming webhook for your Slack at https://my.slack.com/se
 	Run: func(cmd *cobra.Command, args []string) {
 
 		message := getPipedInput()
-		if len(args) > 1 {
+		if len(args) > 0 {
 			message = args[0]
 		}
 
@@ -101,21 +101,24 @@ func init() {
 func initConfig() {
 	if cfgFile != "" {
 		viper.SetConfigFile(cfgFile)
+	} else {
+		viper.SetConfigName(".slackstatus")
 	}
 
-	viper.SetConfigName(".slackstatus")
 	viper.AddConfigPath(os.Getenv("HOME"))
 	viper.AddConfigPath(".")
 	viper.SetEnvPrefix("slackstatus")
 	viper.AutomaticEnv()
 
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	log.Println("Using config file:", viper.ConfigFileUsed())
 }
 
 func getPipedInput() string {
-
 	fileInput, err := os.Stdin.Stat()
 	if err != nil {
 		log.Fatal(err)
