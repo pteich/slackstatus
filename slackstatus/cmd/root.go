@@ -62,6 +62,7 @@ You need to set up an incoming webhook for your Slack at https://my.slack.com/se
 			IconEmoji:        viper.GetString("iconemoji"),
 			Footer:           viper.GetString("footer"),
 			RetryRatelimited: viper.GetBool("retry"),
+			RetryBackground:  false,
 		}
 
 		if err := slackmsg.Send(message, viper.GetString("color")); err != nil {

@@ -3,18 +3,22 @@ package slackstatus
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
 
+	"github.com/pteich/errors"
 	"github.com/pteich/go-timeout-httpclient"
 )
 
 const (
-	defaultRetrySec = 30
-	maxRetry        = 3
+	defaultRetrySec = 1
+	maxRetry        = 10
+)
+
+var (
+	errTooManyRequests = errors.New("too many requests")
 )
 
 // Message defines the message that should be send to Slack
@@ -56,21 +60,36 @@ func (msg *Message) Send(message string, color string) error {
 	}
 	req.Header.Set("Content-type", "application/json")
 
-	resp, err := msg.httpClient.Do(req)
-	if err != nil {
-		return err
-	}
-
-	defer resp.Body.Close()
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-
-	if resp.StatusCode == http.StatusTooManyRequests && msg.RetryRatelimited && msg.retryCount < maxRetry {
-		retryAfter := resp.Header.Get("retry-after")
-		retrySec, err := strconv.Atoi(retryAfter)
+	doRequest := func() (int, error) {
+		resp, err := msg.httpClient.Do(req)
 		if err != nil {
-			retrySec = defaultRetrySec
+			return 0, err
 		}
 
+		defer resp.Body.Close()
+		responseBody, _ := ioutil.ReadAll(resp.Body)
+
+		if resp.StatusCode == http.StatusTooManyRequests {
+			retryAfter := resp.Header.Get("retry-after")
+			retrySec, err := strconv.Atoi(retryAfter)
+			if err != nil || retrySec == 0 {
+				retrySec = defaultRetrySec
+			}
+			return retrySec, errTooManyRequests
+		}
+
+		if resp.StatusCode != http.StatusOK {
+			return 0, errors.Errorf("got wrong status %d. body: %s", resp.StatusCode, responseBody)
+		}
+
+		return 0, nil
+	}
+
+	retrySec, err := doRequest()
+	if errors.Is(err, errTooManyRequests) && msg.RetryRatelimited {
+		if msg.retryCount < maxRetry {
+			return errors.Wrapf(err, "retry limit %d reached", maxRetry)
+		}
 		retryFunc := func(message string, color string) error {
 			msg.retryCount++
 			<-time.After(time.Duration(retrySec) * time.Second)
@@ -84,11 +103,7 @@ func (msg *Message) Send(message string, color string) error {
 		}
 	}
 
-	if resp.StatusCode != 200 {
-		return errors.New(string(responseBody))
-	}
-
-	return nil
+	return err
 }
 
 func (msg *Message) createHttpClient() {
